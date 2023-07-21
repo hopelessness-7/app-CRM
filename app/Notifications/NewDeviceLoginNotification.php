@@ -44,18 +44,6 @@ class NewDeviceLoginNotification extends Notification
                 ->subject('New Device Login Confirmation Code');
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
-    {
-        return [
-            //
-        ];
-    }
-
     public function toDatabase($notifiable): array
     {
         return [

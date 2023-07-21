@@ -9,14 +9,15 @@ class MainController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function sendResponse($result, $message)
+    public function sendResponse(mixed $result, string $message = 'request completed successfully', int $code = 200)
     {
         $response = [
             'data'    => $result,
             'message' => $message,
+            'code' => $code
         ];
 
-        return response()->json($response, 200);
+        return response()->json($response, $code);
     }
 
     /**
@@ -28,7 +29,8 @@ class MainController extends Controller
     {
         $response = [
             'errors' => [
-                'error' => $error
+                'error' => $error,
+                'code' => $code
             ],
         ];
 

@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\ConfirmationCodeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +23,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth.api')->group(function () {
+    Route::get('profile/{id?}', [UserController::class, 'index']);
+});
+
 Route::post('/login', [LoginController::class, '__invoke']);
 Route::post('/register', [RegisterController::class, '__invoke']);
 Route::post('new_confirmation_code', [ConfirmationCodeController::class, 'newConfirmationCode']);
 Route::post('confirmation_code', [ConfirmationCodeController::class, 'confirmationCode']);
+
+
+
+// Verify email
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->middleware(['throttle:6,1'])->name('verification.verify');
+// Resend link to verify email
+Route::post('/email/verify/resend', [VerificationController::class, 'resend'])->middleware(['auth:api', 'throttle:6,1'])->name('verification.send');
