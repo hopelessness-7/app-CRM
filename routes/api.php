@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Auth\ConfirmationCodeController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\UserController;
-use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\API\Auth\ConfirmationCodeController;
+use App\Http\Controllers\API\Auth\LoginController;
+use App\Http\Controllers\API\Auth\RegisterController;
+use App\Http\Controllers\API\Auth\UserController;
+use App\Http\Controllers\API\Auth\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
