@@ -56,6 +56,7 @@ class ConfirmationCodeController extends AuthController
             'name' => $user->name,
             'email' => $user->email,
             'token' => JWTAuth::fromUser($user),
+            
         ];
 
         $message = 'Authorization of the new device was successful';

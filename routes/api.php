@@ -24,13 +24,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth.api')->group(function () {
-    Route::get('profile/{id?}', [UserController::class, 'index']);
+    Route::get('/profile/{id?}', [UserController::class, 'index']);
+    Route::post('/profile/update', [UserController::class, 'update']);
 });
 
 Route::post('/login', [LoginController::class, '__invoke']);
 Route::post('/register', [RegisterController::class, '__invoke']);
-Route::post('new_confirmation_code', [ConfirmationCodeController::class, 'newConfirmationCode']);
-Route::post('confirmation_code', [ConfirmationCodeController::class, 'confirmationCode']);
+Route::post('/new_confirmation_code', [ConfirmationCodeController::class, 'newConfirmationCode']);
+Route::post('/confirmation_code', [ConfirmationCodeController::class, 'confirmationCode']);
 
 
 
