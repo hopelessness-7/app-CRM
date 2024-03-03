@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth.api')->group(function () {
     Route::get('/profile/{id?}', [UserController::class, 'index']);
+    Route::get('/search/user', [UserController::class, 'search']);
     Route::post('/profile/update', [UserController::class, 'update']);
 });
 

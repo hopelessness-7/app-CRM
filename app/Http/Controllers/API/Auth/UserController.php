@@ -4,10 +4,20 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Action\ImageHandler;
 use App\Models\User;
+use App\Repositories\Search\EloquentRepository;
 use Illuminate\Http\Request;
 
 class UserController extends AuthController
 {
+    public function search(Request $request)
+    {
+        $searchEloquent = new EloquentRepository;
+        $query = $request->input('query', null);
+        $searchResult = $searchEloquent->search(new User, $query, 'email');
+
+        return $this->sendResponse($searchResult);
+    }
+
     public function index($id = null)
     {
         $user_id = $id ?? auth()->user()->id;
@@ -26,7 +36,6 @@ class UserController extends AuthController
         ];
 
         if ($request->has('avatar')) {
-//            dd($request->avatar);
             ImageHandler::create($user, $request->avatar, 'users/avatar/', 'image');
         }
 

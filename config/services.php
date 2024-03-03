@@ -30,5 +30,11 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    'search' => [
+        'enabled' => env('ELASTICSEARCH_ENABLED', false),
+        'hosts' => explode(',', env('ELASTICSEARCH_HOSTS')),
+        'port' =>  env('ELASTICSEARCH_PORT'),
+        'login' => env('ELASTIC_USERNAME'),
+        'password' => env('ELASTIC_PASSWORD'),
+    ],
 ];
