@@ -12,20 +12,17 @@ class ElasticsearchRepository implements BaseSearch
 {
     private $elasticsearch;
 
-    public function __construct(Client $elasticsearch)
+    public function search(Model $model, string $query = '', string $field = 'title', $exact = false, $perPage = null): mixed
     {
-        $this->elasticsearch = $elasticsearch;
-    }
-
-    public function search(Model $model, string $query = '', string $field = 'title', $exact = false, $perPage = null): Collection
-    {
+        $this->elasticsearch = app(Client::class);
         $items = $this->searchOnElasticsearch($model, $query, $field, $exact);
         return $this->buildCollection($items, $model, $perPage);
     }
 
-    private function searchOnElasticsearch(string $query, Model $modelEloquent, $field, $exact): array
+    private function searchOnElasticsearch(Model $modelEloquent, string $query, $field, $exact): array
     {
         $model = new $modelEloquent;
+        $query = str_replace('@', '\@', $query);
 
         if ($exact) {
             return $this->exact($model, $field, $query);
@@ -66,7 +63,7 @@ class ElasticsearchRepository implements BaseSearch
                         'must' => [
                             [
                                 'query_string' => [
-                                    'fields' => $field,
+                                    'fields' => [$field],
                                     'query' => '*' . $query . '*',
                                 ],
                             ]
@@ -79,12 +76,16 @@ class ElasticsearchRepository implements BaseSearch
         return $items['hits']['hits'];
     }
 
-    private function buildCollection(array $items, Model $modelEloquent, $perPage): Collection
+    private function buildCollection(array $items, Model $modelEloquent, $perPage): mixed
     {
         $ids = Arr::pluck($items, '_id');
 
-        return $modelEloquent::whereIn('id', $ids)
-            ->orderByRaw('FIELD(id, ' . implode(',', $ids) . ')')
-            ->paginate($perPage);
+        $requestEloquent = $modelEloquent::whereIn('id', $ids);
+
+        if ($perPage != null) {
+            return $requestEloquent->paginate($perPage);
+        } else {
+            return $requestEloquent->get();
+        }
     }
 }

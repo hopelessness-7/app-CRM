@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 interface BaseSearch
 {
-    public function search(Model $model, string $query = '', string $field = 'title', $exact = false, $perPage = null): Collection;
+    public function search(Model $model, string $query = '', string $field = 'title', $exact = false, $perPage = null): mixed;
 }

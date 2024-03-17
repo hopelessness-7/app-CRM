@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class EloquentRepository implements Interfaces\BaseSearch
 {
 
-    public function search(Model $model, string $query = '', string $field = 'title', $exact = false, $perPage = null): Collection
+    public function search(Model $model, string $query = '', string $field = 'title', $exact = false, $perPage = null): mixed
     {
         if ($exact) {
             $request = $model::where($field, $query);

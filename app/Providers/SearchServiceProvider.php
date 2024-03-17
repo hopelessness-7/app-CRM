@@ -11,11 +11,11 @@ use Illuminate\Support\ServiceProvider;
 
 class SearchServiceProvider extends ServiceProvider
 {
-    private function bindSearchClient(): void
+    private function bindSearchClient()
     {
         $this->app->bind(Client::class, function ($app) {
             return ClientBuilder::create()
-                ->setHosts(['http://elastic:password@localhost:9201'])
+                ->setHosts([config('services.search.host')])
                 ->build();
         });
     }
@@ -28,13 +28,16 @@ class SearchServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(BaseSearch::class, function () {
-            if (config('services.search.enabled')) {
+            // This is useful in case we want to turn-off our
+            // search cluster or when deploying the search
+            // to a live, running application at first.
+            if (! config('services.search.enabled')) {
                 return new EloquentRepository();
-            } else {
-                return new ElasticsearchRepository(
-                    $this->app->make(Client::class)
-                );
             }
+
+            return new ElasticsearchRepository(
+                $app->make(Client::class)
+            );
         });
 
         $this->bindSearchClient();

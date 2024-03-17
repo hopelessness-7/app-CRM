@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers\ApiV1\Auth;
 
 use App\Action\ImageHandler;
 use App\Models\User;
-use App\Repositories\Search\EloquentRepository;
+use App\Repositories\Search\ElasticsearchRepository;
 use Illuminate\Http\Request;
 
 class UserController extends AuthController
 {
     public function search(Request $request)
     {
-        $searchEloquent = new EloquentRepository;
+        $searchEloquent = new ElasticsearchRepository();
         $query = $request->input('query', null);
-        $searchResult = $searchEloquent->search(new User, $query, 'email');
+
+        $searchResult = $searchEloquent->search(new User(), $query, 'email');
 
         return $this->sendResponse($searchResult);
     }

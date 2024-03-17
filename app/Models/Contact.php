@@ -31,9 +31,4 @@ class Contact extends Model
     {
         return $this->hasOne(Cleint::class);
     }
-
-    public function type(): BelongsTo
-    {
-        return $this->belongsTo(ClientType::class);
-    }
 }

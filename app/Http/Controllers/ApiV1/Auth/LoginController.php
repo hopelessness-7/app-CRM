@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers\ApiV1\Auth;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Notifications\NewDeviceLoginNotification;

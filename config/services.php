@@ -32,9 +32,6 @@ return [
     ],
     'search' => [
         'enabled' => env('ELASTICSEARCH_ENABLED', false),
-        'hosts' => explode(',', env('ELASTICSEARCH_HOSTS')),
-        'port' =>  env('ELASTICSEARCH_PORT'),
-        'login' => env('ELASTIC_USERNAME'),
-        'password' => env('ELASTIC_PASSWORD'),
+        'host' => env('ELASTICSEARCH_HOST'),
     ],
 ];
