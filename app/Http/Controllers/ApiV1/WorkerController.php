@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\ApiV1;
 
 use App\Http\Controllers\MainController;
-use App\Http\Requests\ContactRequest;
-use App\Http\Resources\Contact\ContactResource;
-use App\Services\ContactService;
+use App\Http\Requests\WorkerRequest;
+use App\Http\Resources\Worker\WorkerResource;
+use App\Services\WorkerService;
 use Illuminate\Http\Request;
 
-class ContactController extends MainController
+class WorkerController extends MainController
 {
-    protected ContactService $service;
-    public function __construct(ContactService $service)
+    protected WorkerService $service;
+
+    public function __construct(WorkerService $service)
     {
         $this->service = $service;
     }
@@ -20,7 +21,7 @@ class ContactController extends MainController
     {
         try {
             $paginate = $request->input('paginate', 10);
-            $resource = ContactResource::collection($this->service->index($paginate))->resolve();
+            $resource = WorkerResource::collection($this->service->index($paginate))->resolve();
             return $this->sendResponse($resource);
         } catch (\Exception $exception) {
             return $this->sendError($exception->getMessage(), $exception->getCode());
@@ -30,29 +31,29 @@ class ContactController extends MainController
     public function show($id)
     {
         try {
-            $resource = ContactResource::make($this->service->show($id))->resolve();
+            $resource = WorkerResource::make($this->service->show($id))->resolve();
             return $this->sendResponse($resource);
         } catch (\Exception $exception) {
             return $this->sendError($exception->getMessage(), $exception->getCode());
         }
     }
 
-    public function create(ContactRequest $request)
+    public function create(WorkerRequest $request)
     {
         try {
-            $contact = $request->validated();
-            $resource = ContactResource::make($this->service->create($contact))->resolve();
+            $data = $request->validated();
+            $resource = WorkerResource::make($this->service->create($data))->resolve();
             return $this->sendResponse($resource);
         } catch (\Exception $exception) {
             return $this->sendError($exception->getMessage(), $exception->getCode());
         }
     }
 
-    public function update(ContactRequest $request, $id)
+    public function update(WorkerRequest $request, $id)
     {
         try {
-            $contact = $request->validated();
-            $resource = ContactResource::make($this->service->update((int) $id, $contact))->resolve();
+            $data = $request->validated();
+            $resource = WorkerResource::make($this->service->update((int) $id, $data))->resolve();
             return $this->sendResponse($resource);
         } catch (\Exception $exception) {
             return $this->sendError($exception->getMessage(), $exception->getCode());
@@ -62,8 +63,7 @@ class ContactController extends MainController
     public function delete($id)
     {
         try {
-            $this->service->delete((int) $id);
-            return $this->sendResponse([]);
+            return $this->sendResponse($this->service->delete($id));
         } catch (\Exception $exception) {
             return $this->sendError($exception->getMessage(), $exception->getCode());
         }

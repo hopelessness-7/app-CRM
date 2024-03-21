@@ -27,4 +27,12 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $exception)
+    {
+        return response()->json([
+            'error' => $exception->getMessage(),
+            'code' => $exception->getCode(),
+        ], 500); // Вы можете настроить код статуса в соответствии с вашими потребностями
+    }
 }

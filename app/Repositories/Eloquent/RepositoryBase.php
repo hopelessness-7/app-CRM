@@ -11,6 +11,15 @@ class RepositoryBase implements EloquentBase
 {
     protected $model;
 
+    protected function modelException ($model): Model
+    {
+        if (!$model) {
+            throw new \Exception('item not found', 404);
+        }
+
+        return $model;
+    }
+
     public function __construct(Model $model)
     {
         $this->model = $model;
@@ -23,10 +32,11 @@ class RepositoryBase implements EloquentBase
 
     public function find(int $id): Model
     {
-        return $this->model->findOrFail($id);
+        $model = $this->model->find($id);
+        return $this->modelException($model);
     }
 
-    public function findMany(array $ids): Model
+    public function findMany(array $ids): Collection
     {
         return $this->model->findMany($ids);
     }
@@ -38,7 +48,9 @@ class RepositoryBase implements EloquentBase
 
     public function update($id, array $data): bool
     {
-        return $this->model->find($id)->update($data);
+        $model = $this->model->find($id);
+        $checkModel = $this->modelException($model);
+        return $checkModel->update($data);
     }
 
     public function all(): Collection

@@ -14,9 +14,9 @@ class ContactService
         $this->contactRepository = $contactRepository;
     }
 
-    public function index()
+    public function index($paginate)
     {
-
+        return $this->contactRepository->paginate($paginate);
     }
     public function show(int $id): Model
     {
