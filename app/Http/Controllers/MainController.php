@@ -36,4 +36,13 @@ class MainController extends Controller
 
         return response()->json($response, $code);
     }
+
+    public function handleRequest($callback)
+    {
+        try {
+            return $this->sendResponse($callback());
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage(), $e->getCode());
+        }
+    }
 }

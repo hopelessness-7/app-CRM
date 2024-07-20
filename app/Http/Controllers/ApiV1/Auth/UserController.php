@@ -3,12 +3,20 @@
 namespace App\Http\Controllers\ApiV1\Auth;
 
 use App\Action\ImageHandler;
+use App\Http\Requests\Auth\UpdateUserRequest;
 use App\Models\User;
 use App\Repositories\Search\ElasticsearchRepository;
+use App\Services\Auth\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends AuthController
 {
+    protected UserService $service;
+    public function __construct(UserService $service)
+    {
+        $this->service = $service;
+    }
+
     public function search(Request $request)
     {
         $searchEloquent = new ElasticsearchRepository();
@@ -19,30 +27,25 @@ class UserController extends AuthController
         return $this->sendResponse($searchResult);
     }
 
-    public function index($id = null)
+    public function show($id = null)
     {
-        $user_id = $id ?? auth()->user()->id;
-
-        $user = User::find($user_id);
-
-        return $this->sendResponse($user);
+        try {
+            $user_id = $id ?? auth()->user()->id;
+            $user = $this->service->show($user_id);
+            return $this->sendResponse($user);
+        } catch (\Exception $exception) {
+            return $this->sendError($exception->getMessage(), $exception->getCode());
+        }
     }
 
-    public function update(Request $request)
+    public function update(UpdateUserRequest $request)
     {
-        $user = auth()->user();
-
-        $data = [
-            'name' => $request->name,
-        ];
-
-        if ($request->has('avatar')) {
-            ImageHandler::create($user, $request->avatar, 'users/avatar/', 'image');
+        try {
+            $userUpdate = $request->validated();
+            $user = $this->service->update(auth()->user()->id, $userUpdate);
+            return $this->sendResponse($user);
+        } catch (\Exception $exception) {
+            return $this->sendError($exception->getMessage(), $exception->getCode());
         }
-
-        $user->update($data);
-        $user->avatar = $user->images->where('type', 'image')->first();
-
-        return $user;
     }
 }

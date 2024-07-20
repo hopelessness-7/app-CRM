@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiV1\ContactController;
+use App\Http\Controllers\ApiV1\Kanban\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,13 +16,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(function () {
-    Route::controller(ContactController::class)->group(function () {
-        Route::get('/contacts', 'index');
-        Route::get('/contacts/show/{id}', 'show');
-        Route::post('/contacts/create', 'create');
-        Route::post('/contacts/update/{id}', 'update');
-        Route::delete('contacts/delete/{id}', 'delete');
+    Route::middleware('auth.api')->group(function () {
+        Route::controller(ContactController::class)->group(function () {
+            Route::get('/contacts', 'index');
+            Route::get('/contacts/show/{id}', 'show');
+            Route::post('/contacts/create', 'create');
+            Route::post('/contacts/update/{id}', 'update');
+            Route::delete('contacts/delete/{id}', 'delete');
+        });
     });
+
+    require_once 'kanban.php';
 });
 
 require_once 'auth.php';
