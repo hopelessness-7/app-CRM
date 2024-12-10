@@ -2,7 +2,7 @@
 
 namespace App\Services\Kanban;
 
-use App\Repositories\Eloquent\DashboardRepository;
+use App\Repositories\Eloquent\Kanban\DashboardRepository;
 
 class DashboardService
 {

@@ -30,8 +30,11 @@ class LoginController extends AuthController
             if ($response['code'] == 403 || $response['code'] == 409) {
                 throw new \Exception($response['message'], $response['code']);
             }
-        } catch (\Exception $exception) {
+
             return $this->sendResponse([$this->createNewToken($response['token'])], $response['message']);
+
+        } catch (\Exception $exception) {
+            return $this->sendResponse(null, $response['message']);
         }
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ApiV1\ContactController;
-use App\Http\Controllers\ApiV1\Kanban\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +26,7 @@ Route::prefix('v1')->group(function () {
     });
 
     require_once 'kanban.php';
+    require_once 'chat.php';
 });
 
 require_once 'auth.php';

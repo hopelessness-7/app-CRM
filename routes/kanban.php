@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ApiV1\Kanban\DashboardController;
-use App\Http\Controllers\ApiV1\Kanban\TeamController;
+use App\Http\Controllers\Kanban\ApiV1\DashboardController;
+use App\Http\Controllers\Kanban\ApiV1\TeamController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('kanban')->group(function () {

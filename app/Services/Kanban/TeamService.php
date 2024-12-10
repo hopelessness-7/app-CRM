@@ -2,7 +2,7 @@
 
 namespace App\Services\Kanban;
 
-use App\Repositories\Eloquent\TeamRepository;
+use App\Repositories\Eloquent\Kanban\TeamRepository;
 
 class TeamService
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories\Eloquent\Kanban;
 
 use App\Models\Kanban\Dashboard;
 use App\Repositories\Eloquent\RepositoryBase;

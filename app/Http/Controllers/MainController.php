@@ -39,10 +39,10 @@ class MainController extends Controller
 
     public function handleRequest($callback)
     {
-        try {
+//        try {
             return $this->sendResponse($callback());
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage(), $e->getCode());
-        }
+//        } catch (\Exception $e) {
+//            return $this->sendError($e->getMessage(), $e->getCode());
+//        }
     }
 }

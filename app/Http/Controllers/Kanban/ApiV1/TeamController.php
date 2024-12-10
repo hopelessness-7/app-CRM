@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ApiV1\Kanban;
+namespace App\Http\Controllers\Kanban\ApiV1;
 
 use App\Http\Controllers\MainController;
 use App\Http\Requests\Kanban\TeamRequest;
