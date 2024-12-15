@@ -7,7 +7,7 @@ Route::prefix('chat')->group(function () {
     Route::middleware('auth.api')->group(function () {
         Route::controller(MessageController::class)->group(function () {
             Route::get('/{roomId}/messages', 'index');
+            Route::post('/messages/send', 'send');
         });
-
     });
 });

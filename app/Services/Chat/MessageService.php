@@ -2,6 +2,7 @@
 
 namespace App\Services\Chat;
 
+use App\Events\Chat\MessageEvent;
 use App\Models\Chat\Message;
 use App\Models\Chat\Room;
 use App\Repositories\Eloquent\Chat\MessageRepository;
@@ -27,7 +28,9 @@ class MessageService
 
     public function send($data): Model
     {
-        return $this->repository->create($data);
+        $message = $this->repository->create($data);
+        event(new MessageEvent($message->toArray(), $message->room_id));
+        return  $message;
     }
 
     public function show($messageId): Model

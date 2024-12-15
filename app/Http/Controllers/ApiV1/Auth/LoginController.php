@@ -34,7 +34,7 @@ class LoginController extends AuthController
             return $this->sendResponse([$this->createNewToken($response['token'])], $response['message']);
 
         } catch (\Exception $exception) {
-            return $this->sendResponse(null, $response['message']);
+            return $this->sendError($exception->getMessage(), $exception->getCode());
         }
     }
 }
