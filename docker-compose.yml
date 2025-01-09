@@ -50,7 +50,7 @@ services:
             retries: 3
             timeout: 5s
     elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.18
+        image: elasticsearch:7.17.26
         environment:
             - discovery.type=single-node
         ports:
@@ -61,7 +61,7 @@ services:
         networks:
             - sail
     redis:
-        image: 'redis:alpine'
+        image: 'redis:latest'
         ports:
             - '${REDIS_PORT:-6379}:6379'
         volumes:

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\ElasticSearch;
 
+use Elastic\Elasticsearch\Client;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
-use Elastic\Elasticsearch\Client;
 
 class ReindexCommand extends Command
 {

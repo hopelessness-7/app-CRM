@@ -16,7 +16,7 @@ class DashboardController extends MainController
      */
     public function index(Request $request, DashboardService $service)
     {
-        return $this->handleRequest(function () use ($service, $request) {
+        return $this->executeRequest(function () use ($service, $request) {
             return DashboardResource::collection($service->getDashboard($request->input('paginate', 10)))->resolve();
         });
     }
@@ -26,7 +26,7 @@ class DashboardController extends MainController
      */
     public function store(DashboardRequest $request, DashboardService $service)
     {
-        return $this->handleRequest(function () use ($request, $service) {
+        return $this->executeRequest(function () use ($request, $service) {
             return DashboardResource::make($service->store($request->validated()))->resolve();
         });
     }
@@ -36,7 +36,7 @@ class DashboardController extends MainController
      */
     public function show(string $id, DashboardService $service)
     {
-        return  $this->handleRequest(function () use ($id, $service) {
+        return  $this->executeRequest(function () use ($id, $service) {
             return DashboardResource::make($service->show($id))->resolve();
         });
     }
@@ -46,7 +46,7 @@ class DashboardController extends MainController
      */
     public function update(DashboardUpdateRequest $request, DashboardService $service, string $id)
     {
-        return $this->handleRequest(function () use ($request, $service, $id) {
+        return $this->executeRequest(function () use ($request, $service, $id) {
             $service->update($id, $request->validated());
         });
     }
@@ -56,7 +56,7 @@ class DashboardController extends MainController
      */
     public function destroy(DashboardService $service, string $id)
     {
-        return $this->handleRequest(function () use ($service, $id) {
+        return $this->executeRequest(function () use ($service, $id) {
            $service->delete($id);
         });
     }

@@ -2,21 +2,21 @@
 
 namespace App\Providers;
 
-use App\Repositories\Search\ElasticsearchRepository;
-use App\Repositories\Search\EloquentRepository;
-use Elastic\Elasticsearch\Client;
-use Elastic\Elasticsearch\ClientBuilder;
+use App\Models\Chat\Message;
+use App\Models\Chat\Room;
+use App\Observers\MessageObserver;
+use App\Observers\RoomObserver;
+use App\Services\Chat\CacheInvalidationService;
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\Search\Interfaces\BaseSearch;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      */
-    public function register()
+    public function register(): void
     {
-
+        $this->app->singleton(CacheInvalidationService::class);
     }
 
     /**
@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Message::observe(MessageObserver::class);
+        Room::observe(RoomObserver::class);
     }
 }

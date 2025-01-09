@@ -12,16 +12,24 @@ class MessageController extends MainController
 {
     public function index(Request $request, MessageService $service, $roomId)
     {
-        return $this->handleRequest(function () use ($service, $request, $roomId) {
+        return $this->executeRequest(function () use ($service, $request, $roomId) {
             return MessagesResource::collection($service->getMessagesInRoom($roomId, $request->input('paginate', 20)))->resolve();
         });
     }
 
     public function send(MessageRequest $request, MessageService $service)
     {
-        return $this->handleRequest(function () use ($request, $service) {
+        return $this->executeRequest(function () use ($request, $service) {
             $data = $request->validated();
             return MessagesResource::make($service->send($data));
+        });
+    }
+
+    public  function update(MessageUpdateRequest $request, MessageService $service)
+    {
+        return $this->executeRequest(function () use ($request, $service) {
+           $data = $request->validated();
+           return $service->update($data);
         });
     }
 }

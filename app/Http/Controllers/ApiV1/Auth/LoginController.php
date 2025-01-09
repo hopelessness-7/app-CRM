@@ -20,7 +20,7 @@ class LoginController extends AuthController
     public function __invoke(LoginRequest $request): JsonResponse
     {
         try {
-            // получаем устройство и айпишник пользователя
+            // получаем устройство и ip пользователя
             $data = $request->validated();
             $data['currentDevice'] = $request->userAgent();
             $data['userIp'] = $request->ip();
@@ -34,7 +34,7 @@ class LoginController extends AuthController
             return $this->sendResponse([$this->createNewToken($response['token'])], $response['message']);
 
         } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), $exception->getCode());
+            return $this->sendError($exception->getMessage(), 500);
         }
     }
 }

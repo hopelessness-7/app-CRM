@@ -37,7 +37,7 @@ class MainController extends Controller
         return response()->json($response, $code);
     }
 
-    public function handleRequest($callback)
+    public function executeRequest($callback)
     {
 //        try {
             return $this->sendResponse($callback());

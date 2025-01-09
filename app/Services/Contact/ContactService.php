@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Contact;
 
-use App\Models\Contact;
 use App\Repositories\Eloquent\ContactRepository;
 use Illuminate\Database\Eloquent\Model;
 

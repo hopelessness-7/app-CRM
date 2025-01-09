@@ -5,7 +5,7 @@ namespace App\Http\Controllers\ApiV1;
 use App\Http\Controllers\MainController;
 use App\Http\Requests\ContactRequest;
 use App\Http\Resources\Contact\ContactResource;
-use App\Services\ContactService;
+use App\Services\Contact\ContactService;
 use Illuminate\Http\Request;
 
 class ContactController extends MainController

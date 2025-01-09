@@ -6,6 +6,7 @@ use App\Models\Chat\Room;
 use App\Repositories\Eloquent\RepositoryBase;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class RoomRepository extends RepositoryBase
@@ -31,11 +32,18 @@ class RoomRepository extends RepositoryBase
 
     public function getMessagesInRoom($roomId, $user, $paginate): LengthAwarePaginator
     {
-        $room = $this->model->whereHas('users', function ($query) use ($user) {
-            $query->where('users.id', $user->id);
-        })->where('id', $roomId)->first();
+        // Создаем уникальный ключ для кэша
+        $cacheKey = "room_{$roomId}_user_{$user->id}_paginate_{$paginate}";
+        // Добавляем теги для группировки ключей
+        $cacheTags = ["room_{$roomId}_messages", "user_{$user->id}_messages"];
 
-        return $room ? $room->messages()->paginate($paginate) : collect();
+        // Проверяем наличие данных в кэше
+        return Cache::tags($cacheTags)->remember($cacheKey, now()->addMinutes(10), function () use ($roomId, $user, $paginate) {
+            $room = $this->model->whereHas('users', function ($query) use ($user) {
+                $query->where('users.id', $user->id);
+            })->where('id', $roomId)->first();
+
+            return $room ? $room->messages()->paginate($paginate) : collect();
+        });
     }
-
 }

@@ -8,7 +8,7 @@ use App\Http\Controllers\ApiV1\Auth\VerificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth.api')->group(function () {
-    Route::get('/profile/{id?}', [UserController::class, 'index']);
+    Route::get('/profile/{id?}', [UserController::class, 'show']);
     Route::get('/search/user', [UserController::class, 'search']);
     Route::post('/profile/update', [UserController::class, 'update']);
 });
