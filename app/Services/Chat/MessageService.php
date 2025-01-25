@@ -43,8 +43,7 @@ class MessageService
      */
     public function update($messageId, $data): Model
     {
-        $this->repository->update($messageId, $data);
-        return $this->show($messageId);
+        return $this->repository->update($messageId, $data);
     }
 
     public function delete($messageId): void

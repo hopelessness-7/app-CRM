@@ -30,7 +30,7 @@ class WorkerService
         return $this->repository->create($data);
     }
 
-    public function update($id, array $data): bool
+    public function update($id, array $data): Model
     {
         return $this->repository->update($id, $data);
     }

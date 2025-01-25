@@ -35,8 +35,7 @@ class RoomService
      */
     public function update($roomId, $data): Model
     {
-        $this->roomRepository->update($roomId, $data);
-        return $this->show($roomId);
+        return $this->roomRepository->update($roomId, $data);
     }
 
     public function delete($roomId): void

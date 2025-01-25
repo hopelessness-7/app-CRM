@@ -53,8 +53,7 @@ class DealService
             return $this->confirmDeal($id, $data);
         }
 
-        $this->dealRepository->update($id, $data);
-        return $this->show($id);
+        return $this->dealRepository->update($id, $data);
     }
     public function delete($id): void
     {

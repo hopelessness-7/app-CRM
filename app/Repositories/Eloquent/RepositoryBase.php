@@ -49,11 +49,11 @@ class RepositoryBase implements EloquentBase
         return $this->model->create($data);
     }
 
-    public function update($id, array $data): bool
+    public function update($id, array $data): Model
     {
-        $model = $this->model->find($id);
-        $checkModel = $this->modelException($model);
-        return $checkModel->update($data);
+        $model = $this->find($id);
+        $model->update($data);
+        return $model;
     }
 
     public function all(): Collection

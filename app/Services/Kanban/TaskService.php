@@ -3,6 +3,7 @@
 namespace App\Services\Kanban;
 
 use App\Repositories\Eloquent\Kanban\TaskRepository;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class TaskService
@@ -19,18 +20,17 @@ class TaskService
         return $this->taskRepository->getTasksFromDashboard($paginate, $id);
     }
 
-    public function show($id): \Illuminate\Database\Eloquent\Model
+    public function show($id): Model
     {
         return $this->taskRepository->find($id);
     }
-    public function store($data): \Illuminate\Database\Eloquent\Model
+    public function store($data): Model
     {
         return $this->taskRepository->create($data);
     }
-    public function update($id, $data): \Illuminate\Database\Eloquent\Model
+    public function update($id, $data): Model
     {
-        $this->taskRepository->update($id, $data);
-        return $this->show($id);
+        return $this->taskRepository->update($id, $data);
     }
     public function delete($id): void
     {

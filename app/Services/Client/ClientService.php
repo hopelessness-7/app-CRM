@@ -31,8 +31,7 @@ class ClientService
 
     public function update($data, $clientId): Model
     {
-        $this->clientRepository->update($data, $clientId);
-        return $this->show($clientId);
+        return $this->clientRepository->update($data, $clientId);
     }
 
     public function delete($clientId): void

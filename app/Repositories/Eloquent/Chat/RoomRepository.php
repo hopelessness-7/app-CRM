@@ -4,10 +4,9 @@ namespace App\Repositories\Eloquent\Chat;
 
 use App\Models\Chat\Room;
 use App\Repositories\Eloquent\RepositoryBase;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
 class RoomRepository extends RepositoryBase
 {
@@ -16,7 +15,7 @@ class RoomRepository extends RepositoryBase
         parent::__construct($room);
     }
 
-    public function update($id, $data): bool
+    public function update($id, $data): Model
     {
         $user = auth()->user();
         $room = $this->model->whereHas('users', function ($query) use ($user) {
@@ -27,7 +26,8 @@ class RoomRepository extends RepositoryBase
             throw new \Exception('item not found', 404);
         }
 
-        return $room->update($data);
+        $room->update($data);
+        return $room;
     }
 
     public function getMessagesInRoom($roomId, $user, $paginate): LengthAwarePaginator

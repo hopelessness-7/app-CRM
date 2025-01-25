@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiV1\Client\SearchClientController;
 use App\Http\Controllers\ApiV1\ContactController;
 use App\Http\Controllers\ApiV1\ContactInformationController;
 use App\Http\Controllers\ApiV1\DealController;
+use App\Http\Controllers\ApiV1\SchedulerController;
 use App\Http\Controllers\ApiV1\WorkerController;
 use App\Http\Controllers\Kanban\ApiV1\ClientTaskController;
 use App\Http\Controllers\Kanban\ApiV1\DashboardController;
@@ -81,6 +82,20 @@ Route::prefix('/crm')->group(function () {
         Route::put('/deals/update/{id}', 'update');
         Route::delete('/deals/delete/{id}', 'delete');
     });
+    Route::controller(SchedulerController::class)->group(function () {
+        Route::get('/schedulers', 'index');
+        Route::get('/schedulers/show/{id}', 'show');
+        Route::post('/schedulers/create', 'create');
+        Route::put('/schedulers/update/{id}', 'update');
+        Route::delete('/schedulers/delete/{id}', 'delete');
+    });
+
+    // Аналитика и отчеты
+
+    // Интеграция с почтой и мессенджерами
+
+   // шаблоны - автоматизация стандартных задач
+
 });
 
 

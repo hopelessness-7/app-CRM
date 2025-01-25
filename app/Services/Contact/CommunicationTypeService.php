@@ -3,6 +3,7 @@
 namespace App\Services\Contact;
 
 use App\Repositories\Eloquent\CommunicationTypeRepository;
+use Illuminate\Database\Eloquent\Collection;
 
 class CommunicationTypeService
 {
@@ -12,7 +13,7 @@ class CommunicationTypeService
         $this->$communicationTypeRepository = $communicationTypeRepository;
     }
 
-    public function getTypes()
+    public function getTypes(): Collection
     {
         return $this->communicationTypeRepository->all();
     }
