@@ -10,62 +10,39 @@ use Illuminate\Http\Request;
 
 class WorkerController extends MainController
 {
-    protected WorkerService $service;
-
-    public function __construct(WorkerService $service)
+    public function index(Request $request, WorkerService $service)
     {
-        $this->service = $service;
-    }
-
-    public function index(Request $request)
-    {
-        try {
+        return $this->executeRequest(function () use ($request, $service) {
             $paginate = $request->input('paginate', 10);
-            $resource = WorkerResource::collection($this->service->index($paginate))->resolve();
-            return $this->sendResponse($resource);
-        } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), $exception->getCode());
-        }
+            return WorkerResource::collection($service->index($paginate))->resolve();
+        });
     }
 
-    public function show($id)
+    public function show(WorkerService $service, $id)
     {
-        try {
-            $resource = WorkerResource::make($this->service->show($id))->resolve();
-            return $this->sendResponse($resource);
-        } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), $exception->getCode());
-        }
+        return $this->executeRequest(function () use ($service, $id) {
+            return WorkerResource::make($service->show($id))->resolve();
+        });
     }
 
-    public function create(WorkerRequest $request)
+    public function create(WorkerRequest $request, WorkerService $service)
     {
-        try {
-            $data = $request->validated();
-            $resource = WorkerResource::make($this->service->create($data))->resolve();
-            return $this->sendResponse($resource);
-        } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), $exception->getCode());
-        }
+        return $this->executeRequest(function () use ($request, $service) {
+            WorkerResource::make($service->create($request->validated()))->resolve();
+        });
     }
 
-    public function update(WorkerRequest $request, $id)
+    public function update(WorkerRequest $request, WorkerService $service, $id)
     {
-        try {
-            $data = $request->validated();
-            $resource = WorkerResource::make($this->service->update((int) $id, $data))->resolve();
-            return $this->sendResponse($resource);
-        } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), $exception->getCode());
-        }
+        return $this->executeRequest(function () use ($request, $service, $id) {
+            return WorkerResource::make($service->update($id, $request->validated()))->resolve();
+        });
     }
 
-    public function delete($id)
+    public function delete(WorkerService $service, $id)
     {
-        try {
-            return $this->sendResponse($this->service->delete($id));
-        } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), $exception->getCode());
-        }
+        return $this->executeRequest(function () use ($service, $id) {
+            $service->delete($id);
+        });
     }
 }

@@ -25,7 +25,7 @@ class RegisterController extends MainController
             $user = $this->userService->register($request->validated());
             return $this->sendResponse($user, 'Account has been successfully created');
         } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), $exception->getCode());
+            return $this->sendError($exception->getMessage(), 500);
         }
     }
 }

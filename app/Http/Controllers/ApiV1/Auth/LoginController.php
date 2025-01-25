@@ -28,10 +28,10 @@ class LoginController extends AuthController
             $response = $this->userService->login($data);
 
             if ($response['code'] == 403 || $response['code'] == 409) {
-                throw new \Exception($response['message'], $response['code']);
+               return $this->sendResponse($response, '', $response['code']);
             }
 
-            return $this->sendResponse([$this->createNewToken($response['token'])], $response['message']);
+            return $this->createNewToken($response['token']);
 
         } catch (\Exception $exception) {
             return $this->sendError($exception->getMessage(), 500);

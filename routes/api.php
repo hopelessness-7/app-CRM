@@ -16,16 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::middleware('auth.api')->group(function () {
-        Route::controller(ContactController::class)->group(function () {
-            Route::get('/contacts', 'index');
-            Route::get('/contacts/show/{id}', 'show');
-            Route::post('/contacts/create', 'create');
-            Route::post('/contacts/update/{id}', 'update');
-            Route::delete('contacts/delete/{id}', 'delete');
-        });
+        require_once 'crm.php';
     });
 
-    require_once 'kanban.php';
+
     require_once 'chat.php';
 });
 

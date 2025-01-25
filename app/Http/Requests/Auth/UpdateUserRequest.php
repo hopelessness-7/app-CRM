@@ -2,22 +2,14 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Http\Requests\BaseRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
-class UpdateUserRequest extends FormRequest
+class UpdateUserRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -31,15 +23,5 @@ class UpdateUserRequest extends FormRequest
             'password' => 'string|min:6|confirmed',
             'avatar' => 'image'
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        $errors = (new ValidationException($validator))->errors();
-
-        throw new HttpResponseException(
-            response()->json(['errors' => $errors], Response::HTTP_UNPROCESSABLE_ENTITY)
-        );
-
     }
 }

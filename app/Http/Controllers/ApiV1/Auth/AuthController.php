@@ -9,8 +9,9 @@ class AuthController extends MainController
     public function createNewToken($token)
     {
         $user = auth()->user();
-        return response()->json([
+        return $this->sendResponse([
             'access_token' => $token,
+            'device_status' => true,
             'token_type' => 'Bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60,
             'user' => [

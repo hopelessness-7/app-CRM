@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Chat;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class MessageRequest extends FormRequest
+class MessageRequest extends BaseRequest
 {
     public function rules(): array
     {
@@ -13,10 +13,5 @@ class MessageRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
             'text' => 'required|string|max:1000',
         ];
-    }
-
-    public function authorize(): bool
-    {
-        return true;
     }
 }

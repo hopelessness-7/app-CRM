@@ -2,18 +2,10 @@
 
 namespace App\Http\Requests\Kanban;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class TeamUpdateRequest extends FormRequest
+class TeamUpdateRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *

@@ -29,6 +29,6 @@ class Contact extends Model
 
     public function client(): HasOne
     {
-        return $this->hasOne(Cleint::class);
+        return $this->hasOne(Client::class);
     }
 }

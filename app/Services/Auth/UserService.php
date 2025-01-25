@@ -2,7 +2,6 @@
 
 namespace App\Services\Auth;
 
-use App\Action\ImageDownload;
 use App\Action\ImageHandler;
 use App\Models\User;
 use App\Notifications\NewDeviceLoginNotification;
@@ -11,6 +10,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserService
 {
@@ -23,6 +23,8 @@ class UserService
     {
         $user = $this->userRepository->create($data);
         event(new Registered($user));
+        $token = JWTAuth::fromUser($user);
+        $user->token = $token;
         return $user;
     }
 
@@ -61,6 +63,7 @@ class UserService
             // отдаем ошибку о том, что пользователь вошёл с новым кодам и ему нужно его потвердить
             return [
                 'message' => 'Authorization from a new device, we have sent you an email with a code to confirm authorization',
+                'device_status' => false,
                 'user' => $user->id,
                 'code' => 409,
                 'token' => null,
@@ -71,6 +74,7 @@ class UserService
         if ($existingDevice->status == 0) {
             return [
                 'message' => 'the device is not confirmed, a message has been sent to the mail',
+                'device_status' => false,
                 'user' => null,
                 'code' => 403,
                 'token' => null,
@@ -80,6 +84,7 @@ class UserService
         if (auth()->user()->email_verified_at == null) {
             return [
                 'message' => 'The email address is not confirmed, send it to the mail and confirm it. If you do not receive a message, then send a second email',
+                'device_status' => false,
                 'user' => null,
                 'code' => 403,
                 'token' => null,
@@ -88,7 +93,7 @@ class UserService
 
         return [
             'message' => 'Authorization was successful',
-            'user' => null,
+            'device_status' => true,
             'code' => 200,
             'token' => $token,
         ];

@@ -8,26 +8,26 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class RoomService
 {
-    protected RoomRepository $repository;
+    protected RoomRepository $roomRepository;
 
-    public function __construct(RoomRepository $repository)
+    public function __construct(RoomRepository $roomRepository)
     {
-        $this->repository = $repository;
+        $this->roomRepository = $roomRepository;
     }
 
     public function get($paginate): LengthAwarePaginator
     {
-        return $this->repository->paginate($paginate);
+        return $this->roomRepository->paginate($paginate);
     }
 
-    public function send($data): Model
+    public function create($data): Model
     {
-        return $this->repository->create($data);
+        return $this->roomRepository->create($data);
     }
 
     public function show($roomId): Model
     {
-        return $this->repository->find($roomId);
+        return $this->roomRepository->find($roomId);
     }
 
     /**
@@ -35,12 +35,12 @@ class RoomService
      */
     public function update($roomId, $data): Model
     {
-        $this->repository->update($roomId, $data);
+        $this->roomRepository->update($roomId, $data);
         return $this->show($roomId);
     }
 
     public function delete($roomId): void
     {
-        $this->repository->delete($roomId);
+        $this->roomRepository->delete($roomId);
     }
 }

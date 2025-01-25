@@ -15,25 +15,26 @@ class ContactInformationController extends MainController
         });
     }
 
-    public function set(ContactInformationRequest $request, ContactInformationService $service, $contactId)
+    public function set(ContactInformationRequest $request, ContactInformationService $service)
     {
-        return $this->executeRequest(function () use ($request, $service, $contactId) {
+        return $this->executeRequest(function () use ($request, $service) {
             $data = $request->validated();
-            return $service->setInformation($data, $contactId);
+            return $service->setInformation($data);
         });
     }
 
-    public function update(ContactInformationService $service)
+    public function update(ContactInformationUpdateRequest $request, ContactInformationService $service, $contactInformationId)
     {
-        return $this->executeRequest(function () use ($service) {
-            return $service->updateInformation();
+        return $this->executeRequest(function () use ($request, $service, $contactInformationId) {
+            $data = $request->validated();
+            $service->updateInformation($contactInformationId, $data);
         });
     }
 
-    public function delete(ContactInformationService $service)
+    public function delete(ContactInformationService $service, $contactInformationId)
     {
-        return $this->executeRequest(function () use ($service) {
-            return $service->deleteInformation();
+        return $this->executeRequest(function () use ($service, $contactInformationId) {
+            $service->deleteInformation($contactInformationId);
         });
     }
 }

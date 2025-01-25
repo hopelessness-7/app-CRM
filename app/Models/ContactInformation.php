@@ -10,7 +10,7 @@ class ContactInformation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['contact_id', 'contact_type_id', 'value'];
+    protected $fillable = ['contact_id', 'communication_type_id', 'value'];
 
     public function type(): BelongsTo
     {

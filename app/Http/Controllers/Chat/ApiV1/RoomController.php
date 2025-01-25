@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Chat\ApiV1;
 
 use App\Http\Controllers\MainController;
+use App\Http\Requests\Chat\RoomRequest;
+use App\Http\Resources\Chat\RoomResource;
 use App\Services\Chat\RoomService;
 use Illuminate\Http\Request;
 
@@ -30,9 +32,12 @@ class RoomController extends MainController
         });
     }
 
+    /**
+     * @throws \Exception
+     */
     public function update(RoomService $service, RoomUpdateRequest $request, $roomId)
     {
-        return $this->executeRequest(function () use ($request, $service, $roomId) {
+        return $this->executeRequest( function () use ($request, $service, $roomId) {
             $data = $request->validated();
             return RoomResource::make($service->update($roomId, $data))->resolve();
         });

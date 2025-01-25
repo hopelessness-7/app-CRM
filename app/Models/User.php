@@ -7,6 +7,7 @@ use App\Models\Chat\Message;
 use App\Models\Chat\Room;
 use App\Models\Relations\ImageRelation;
 use App\Models\Traits\Searchable;
+use App\Notifications\Email\CustomEmailVerification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
