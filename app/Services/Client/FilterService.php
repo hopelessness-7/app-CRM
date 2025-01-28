@@ -3,10 +3,11 @@
 namespace App\Services\Client;
 
 use App\Models\Deal;
+use Illuminate\Database\Eloquent\Collection;
 
 class FilterService
 {
-    public function filter(array $param)
+    public function filter(array $param): Collection|array
     {
         $dealQuery = Deal::query();
 
@@ -25,25 +26,21 @@ class FilterService
             if (count($userNameParts) > 1) {
                 $dealQuery->whereHas('contact', function ($query) use ($userNameParts) {
                     $query->where(function($q) use ($userNameParts) {
-                        $q->where('name', 'like', '%' . $userNameParts[0] . '%'); // Фамилия
+                        $q->where('surname', 'like', '%' . $userNameParts[0] . '%'); // Фамилия
                         // Если есть вторая часть (например, имя)
                         if (isset($userNameParts[1])) {
-                            $q->orWhere('name', 'like', '%' . $userNameParts[1] . '%'); // Имя
+                            $q->orWhere('first_name', 'like', '%' . $userNameParts[1] . '%'); // Имя
                         }
                         // Если есть третья часть (например, отчество)
                         if (isset($userNameParts[2])) {
-                            $q->orWhere('name', 'like', '%' . $userNameParts[2] . '%'); // Отчество
+                            $q->orWhere('patronymic', 'like', '%' . $userNameParts[2] . '%'); // Отчество
                         }
-                    })
-                        ->orWhere('email', 'like', '%' . implode(' ', $userNameParts) . '%') // Поиск по email
-                        ->orWhere('phone', 'like', '%' . implode(' ', $userNameParts) . '%'); // Поиск по телефону
+                    });
                 });
             } else {
                 // Если в user_name только одно слово (например, только фамилия)
                 $dealQuery->whereHas('contact', function ($query) use ($param) {
-                    $query->where('name', 'like', '%' . $param['user_name'] . '%')
-                        ->orWhere('email', 'like', '%' . $param['user_name'] . '%')
-                        ->orWhere('phone', 'like', '%' . $param['user_name'] . '%');
+                    $query->where('surname', 'like', '%' . $param['user_name'] . '%');
                 });
             }
         }
