@@ -69,13 +69,22 @@ class RepositoryBase implements EloquentBase
     /**
      * Apply a basic where clause.
      */
-    public function where(string $field, mixed $operatorOrValue, mixed $value = null): static
+    public function where(string|array $field, mixed $operatorOrValue = null, mixed $value = null): static
     {
+        if (is_array($field)) {
+            // Если $field — массив, передаем его в базовый метод Eloquent
+            $this->query->where($field);
+            return $this; // Сразу выходим, дальнейшая логика не нужна
+        }
+
+        // Если $value не задано, подразумевается использование '='
         if (is_null($value)) {
             $this->query->where($field, '=', $operatorOrValue);
         } else {
+            // Передан оператор и значение
             $this->query->where($field, $operatorOrValue, $value);
         }
+
         return $this;
     }
 

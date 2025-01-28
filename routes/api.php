@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiV1\ContactController;
+use App\Http\Controllers\ApiV1\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,11 +17,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::middleware('auth.api')->group(function () {
+
+        Route::controller(NotificationController::class)->group(function () {
+            Route::get('/notifications', 'index');
+            Route::get('/notifications/show/{id}', 'show');
+        });
+
+        require_once 'chat.php';
         require_once 'crm.php';
     });
-
-
-    require_once 'chat.php';
 });
 
 require_once 'auth.php';
