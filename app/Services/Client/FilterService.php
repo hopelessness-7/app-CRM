@@ -50,6 +50,7 @@ class FilterService
                 $query->where('id', $param['deal_id']);
             });
         }
+
         return $dealQuery->get();
     }
 }

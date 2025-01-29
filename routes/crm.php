@@ -90,12 +90,10 @@ Route::prefix('/crm')->group(function () {
         Route::delete('/schedulers/delete/{id}', 'delete');
     });
 
-    // Аналитика и отчеты
-
-    // Интеграция с почтой и мессенджерами
-
-   // шаблоны - автоматизация стандартных задач
-
+    // Воронка продаж (Sales Pipeline) - SalesPipelineController
+    // Аналитика и отчеты - ReportController
+    // шаблоны - автоматизация стандартных задач - AutomationController
+    // Управление договоренностями и документами - DocumentController
 });
 
 
