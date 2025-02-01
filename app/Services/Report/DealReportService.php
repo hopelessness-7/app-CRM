@@ -18,6 +18,8 @@ class DealReportService implements ReportServiceInterface
 
     public function generateReport(array $filters): string
     {
+        // 2 типа отчета по сделкам полный и простой (краткий)
+        // тип отчета зависит от его наполнения
         $reportPatch = '';
         return $reportPatch;
     }
