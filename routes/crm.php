@@ -18,22 +18,22 @@ Route::prefix('/crm')->group(function () {
     Route::prefix('/kanban')->group(function () {
         Route::controller(DashboardController::class)->group(function () {
             Route::get('/dashboards', 'index');
-            Route::get('/dashboards/show/{id}', 'show');
+            Route::get('/dashboards/show/{id}', 'show')->name('dashboards.show');
             Route::post('/dashboards/create', 'store');
             Route::put('/dashboards/update/{id}', 'update');
-            Route::delete('/dashboards/delete/{id}', 'delete');
+            Route::delete('/dashboards/delete/{id}', 'destroy');
         });
         Route::controller(TeamController::class)->group(function () {
             Route::get('/teams', 'index');
             Route::get('/teams/show/{id}', 'show');
             Route::post('/teams/create', 'store');
             Route::put('/teams/update/{id}', 'update');
-            Route::delete('/teams/delete/{id}', 'delete');
+            Route::delete('/teams/delete/{id}', 'destroy');
         });
         Route::controller(TaskController::class)->group(function () {
-            Route::get('/tasks', 'index');
+            Route::get('/tasks/{dashboardId}', 'index');
             Route::get('/tasks/show/{id}', 'show');
-            Route::post('/tasks/create', 'store');
+            Route::post('/tasks/create', 'create');
             Route::put('/tasks/update/{id}', 'update');
             Route::delete('/tasks/delete/{id}', 'delete');
         });

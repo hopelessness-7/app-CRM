@@ -3,6 +3,7 @@
 namespace App\Models\Kanban;
 
 use App\Models\Image;
+use App\Models\Relations\ImageRelation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Dashboard extends Model
 {
-    use HasFactory;
+    use HasFactory, ImageRelation;
 
     protected $fillable = ['title', 'description', 'team_id'];
 
@@ -19,8 +20,8 @@ class Dashboard extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function banner(): HasOne
+    public function banner(): string
     {
-        return $this->hasOne(Image::class);
+        return $this->images()->where('type', 'banner')->value('patch') ?? '';
     }
 }

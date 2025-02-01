@@ -13,7 +13,7 @@ class CodeConfirmService
     protected UserRepository $userRepository;
     public function __construct(UserRepository $userRepository)
     {
-        $this->$userRepository = $userRepository;
+        $this->userRepository = $userRepository;
     }
     public function confirmation($id, $currentDevice, $userRequestCode): array
     {

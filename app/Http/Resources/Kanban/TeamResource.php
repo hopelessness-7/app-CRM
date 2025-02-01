@@ -17,7 +17,7 @@ class TeamResource extends JsonResource
         return [
             'title' => $this->title,
             'description' => $this->description,
-            'banner' => $this->banner->patch,
+            'banner' => $this->banner(),
         ];
     }
 }
