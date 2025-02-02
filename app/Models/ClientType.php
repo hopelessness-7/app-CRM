@@ -10,4 +10,6 @@ class ClientType extends Model
     use HasFactory;
 
     protected $fillable = ['type'];
+
+    public $timestamps = false;
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('contact_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('client_type_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('status');
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->foreignId('worker_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });

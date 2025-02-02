@@ -14,6 +14,8 @@ class Worker extends Model
 
     protected $fillable = ['user_id', 'company_id'];
 
+    public $timestamps = false;
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

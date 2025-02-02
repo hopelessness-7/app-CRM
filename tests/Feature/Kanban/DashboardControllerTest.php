@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Kanban;
 
 use App\Models\Kanban\Dashboard;
 use App\Models\Kanban\Team;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class DashboardControllerTest extends TestCase

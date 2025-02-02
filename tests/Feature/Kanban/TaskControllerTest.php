@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Kanban;
 
 use App\Models\Kanban\Dashboard;
 use App\Models\Kanban\Task;

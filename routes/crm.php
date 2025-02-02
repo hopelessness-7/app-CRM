@@ -38,8 +38,8 @@ Route::prefix('/crm')->group(function () {
             Route::delete('/tasks/delete/{id}', 'delete');
         });
         Route::controller(ClientTaskController::class)->group(function () {
-            Route::get('/tasks/clients/set', 'setClientFromTask');
-            Route::get('/tasks/clients/delete', 'deleteClientFromTask');
+            Route::post('/tasks/clients/set', 'setClientFromTask');
+            Route::post('/tasks/clients/delete', 'deleteClientFromTask');
         });
     });
     Route::controller(ContactController::class)->group(function () {
