@@ -11,6 +11,8 @@ class ContactInformation extends Model
     use HasFactory;
 
     protected $fillable = ['contact_id', 'communication_type_id', 'value'];
+    public $timestamps = false;
+    protected $table = 'contact_information';
 
     public function type(): BelongsTo
     {

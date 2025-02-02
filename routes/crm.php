@@ -46,20 +46,20 @@ Route::prefix('/crm')->group(function () {
         Route::get('/contacts', 'index');
         Route::get('/contacts/show/{id}', 'show');
         Route::post('/contacts/create', 'create');
-        Route::post('/contacts/update/{id}', 'update');
+        Route::put('/contacts/update/{id}', 'update');
         Route::delete('/contacts/delete/{id}', 'delete');
     });
     Route::controller(ContactInformationController::class)->group(function () {
         Route::get('/communications/types', 'getCommunicationType');
-        Route::get('/contacts/information/set', 'set');
-        Route::post('/contacts/information/update/{id}', 'update');
-        Route::post('/contacts/information/delete/{id}', 'delete');
+        Route::post('/contacts/information/set', 'set');
+        Route::put('/contacts/information/update/{id}', 'update');
+        Route::delete('/contacts/information/delete/{id}', 'delete');
     });
     Route::controller(WorkerController::class)->group(function () {
         Route::get('/workers', 'index');
         Route::get('/workers/show/{id}', 'show');
         Route::post('/workers/create', 'create');
-        Route::post('/workers/update/{id}', 'update');
+        Route::put('/workers/update/{id}', 'update');
         Route::delete('/workers/delete/{id}', 'delete');
     });
     Route::prefix('clients')->group(function () {
@@ -67,7 +67,7 @@ Route::prefix('/crm')->group(function () {
             Route::get('/', 'index');
             Route::get('/show/{id}', 'show');
             Route::post('/create', 'create');
-            Route::post('/update/{id}', 'update');
+            Route::put('/update/{id}', 'update');
             Route::delete('/delete/{id}', 'delete');
         });
         Route::get('/filter', [FilterClientController::class, 'index']);
@@ -78,16 +78,16 @@ Route::prefix('/crm')->group(function () {
         Route::get('/deals/clients/{id}', 'getFromClient');
         Route::get('/deals', 'index');
         Route::get('/deals/show/{id}', 'show');
-        Route::post('/deals/create', 'create');
+        Route::post('/deals/create', 'store');
         Route::put('/deals/update/{id}', 'update');
-        Route::delete('/deals/delete/{id}', 'delete');
+        Route::delete('/deals/delete/{id}', 'destroy');
     });
     Route::controller(SchedulerController::class)->group(function () {
         Route::get('/schedulers', 'index');
         Route::get('/schedulers/show/{id}', 'show');
-        Route::post('/schedulers/create', 'create');
+        Route::post('/schedulers/create', 'store');
         Route::put('/schedulers/update/{id}', 'update');
-        Route::delete('/schedulers/delete/{id}', 'delete');
+        Route::delete('/schedulers/delete/{id}', 'destroy');
     });
 
     // Воронка продаж (Sales Pipeline) - SalesPipelineController

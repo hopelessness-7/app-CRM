@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Kanban;
+namespace Tests\Feature\CRM\Kanban;
 
 use App\Models\Kanban\Team;
 use App\Models\User;
