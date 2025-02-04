@@ -9,23 +9,22 @@ class ImageHandler
 {
     private static function hasImagesMethod(Model $model): bool
     {
-        // проврека, что связь к модели картинок существет
+        // проверка, что связь к модели картинок существует
         return method_exists($model, 'images');
     }
-    public static function get(Model $model, $type): string
+    public static function get(Model $model, string $type): string
     {
         // проверяем связь
         if (!self::hasImagesMethod($model)) {
             throw new \Exception("The model does not support this method", 421);
         }
 
-        foreach ($model->images as $image) {
-           if ($image->type == $type) {
-               return $image->patch;
-           }
-        }
+        return optional($model->images()->where('type', $type)->first())->path ?? '';
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function create(Model $model, $fileOrUrl, $patch, $type): void
     {
         if (!self::hasImagesMethod($model)) {
@@ -39,25 +38,5 @@ class ImageHandler
             'patch' => $patchNewImage,
             'type' => $type,
         ]);
-    }
-
-    public static function update(Model $model, $type, $patch): void
-    {
-        if (!self::hasImagesMethod($model)) {
-            throw new \Exception("The model does not support this method", 421);
-        }
-
-        # найдите запись для обновления
-        $image = $model->images()->where(['entity_type' => get_class($model), 'entity_id' => $model->id])->where('type', $type)->first();
-
-        # Если не найдено, создайте новую
-        if (!$image) {
-            self::createAssets($model, $patch, $type);
-            return;
-        }
-
-        # Если запись существует, обновите ее
-        $image->$patch = $patch;
-        $image->save();
     }
 }
