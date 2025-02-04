@@ -9,6 +9,7 @@ use App\Models\Relations\ImageRelation;
 use App\Models\Traits\Searchable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'name',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -91,5 +93,28 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    // Сеттер для role_id
+    public function setRoleIdAttribute($value): void
+    {
+        $this->attributes['role_id'] = $value ?? Role::getDefaultRole()->id;
+    }
+
+    // Проверка, имеет ли пользователь определенную роль
+    public function hasRole($role): bool
+    {
+        return $this->role->slug === $role;
+    }
+
+    // Проверка, имеет ли пользователь определенное разрешение
+    public function hasPermission($permission): bool
+    {
+        return $this->role->permissions->contains('slug', $permission);
     }
 }

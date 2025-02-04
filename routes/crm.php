@@ -94,6 +94,11 @@ Route::prefix('/crm')->group(function () {
     // Аналитика и отчеты - ReportController
     // шаблоны - автоматизация стандартных задач - AutomationController
     // Управление договоренностями и документами - DocumentController
+
+    // Геймификация (GamificationController)
+    //  Управление возвратами и жалобами (ComplaintController)
+    // Управление лояльностью (LoyaltyController)
+    // Управление репутацией (ReputationController)
 });
 
 
