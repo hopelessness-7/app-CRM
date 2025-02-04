@@ -22,9 +22,8 @@ Route::prefix('v1')->group(function () {
             Route::get('/notifications', 'index');
             Route::get('/notifications/show/{id}', 'show');
         });
-
-        require_once 'chat.php';
-        require_once 'crm.php';
+        require base_path('routes/chat.php');
+        require base_path('routes/crm.php');
     });
 });
 

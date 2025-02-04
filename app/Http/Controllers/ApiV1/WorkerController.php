@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ApiV1;
 
 use App\Http\Controllers\MainController;
 use App\Http\Requests\WorkerRequest;
+use App\Http\Requests\WorkerUpdateRequest;
 use App\Http\Resources\Worker\WorkerResource;
 use App\Services\WorkerService;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class WorkerController extends MainController
         });
     }
 
-    public function update(WorkerRequest $request, WorkerService $service, $id)
+    public function update(WorkerUpdateRequest $request, WorkerService $service, $id)
     {
         return $this->executeRequest(function () use ($request, $service, $id) {
             return WorkerResource::make($service->update($id, $request->validated()))->resolve();

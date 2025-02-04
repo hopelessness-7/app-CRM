@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('surname');
             $table->string('first_name');
-            $table->string('patronymic');
-            $table->date('date_birth');
-            $table->string('address');
-            $table->string('place_work');
-            $table->string('job_position');
+            $table->string('patronymic')->nullable();
+            $table->date('date_birth')->nullable();
+            $table->string('address')->nullable();
+            $table->string('place_work')->nullable();
+            $table->string('job_position')->nullable();
             $table->timestamps();
         });
     }

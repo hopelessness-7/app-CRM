@@ -17,13 +17,13 @@ class TaskRepository extends RepositoryBase
     public function setClientFromTask(array $data): Model
     {
         $task = $this->find($data['task_id']);
-        $task->clients->attach($data['client_id']);
+        $task->clients()->attach($data['client_id']);
         return $task;
     }
     public function deleteClientFromTask($data): Model
     {
         $task = $this->find($data['task_id']);
-        $task->clients->detach($data['client_id']);
+        $task->clients()->detach($data['client_id']);
         return $task;
     }
 

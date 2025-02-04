@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\ApiV1;
 
 use App\Http\Controllers\MainController;
+use App\Http\Requests\ContactInformationRequest;
+use App\Http\Requests\ContactInformationUpdateRequest;
 use App\Services\Contact\CommunicationTypeService;
 use App\Services\Contact\ContactInformationService;
 

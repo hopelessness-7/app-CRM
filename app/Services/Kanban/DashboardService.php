@@ -3,6 +3,7 @@
 namespace App\Services\Kanban;
 
 use App\Repositories\Eloquent\Kanban\DashboardRepository;
+use Illuminate\Database\Eloquent\Model;
 
 class DashboardService
 {
@@ -27,9 +28,9 @@ class DashboardService
         return $this->dashboardRepository->create($data);
     }
 
-    public function update($id, $data): void
+    public function update($id, $data): Model
     {
-        $this->dashboardRepository->update($id, $data);
+        return $this->dashboardRepository->update($id, $data);
     }
 
     public function delete($id): void

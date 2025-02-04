@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ApiV1;
 
 use App\Http\Controllers\MainController;
 use App\Http\Requests\ContactRequest;
+use App\Http\Requests\ContactUpdateRequest;
 use App\Http\Resources\Contact\ContactResource;
 use App\Services\Contact\ContactService;
 use Illuminate\Http\Request;
@@ -48,7 +49,7 @@ class ContactController extends MainController
         }
     }
 
-    public function update(ContactRequest $request, $id)
+    public function update(ContactUpdateRequest $request, $id)
     {
         try {
             $contact = $request->validated();

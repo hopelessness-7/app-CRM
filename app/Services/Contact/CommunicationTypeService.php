@@ -10,7 +10,7 @@ class CommunicationTypeService
     protected CommunicationTypeRepository $communicationTypeRepository;
     public function __construct(CommunicationTypeRepository $communicationTypeRepository)
     {
-        $this->$communicationTypeRepository = $communicationTypeRepository;
+        $this->communicationTypeRepository = $communicationTypeRepository;
     }
 
     public function getTypes(): Collection

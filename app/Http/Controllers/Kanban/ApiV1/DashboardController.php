@@ -47,7 +47,7 @@ class DashboardController extends MainController
     public function update(DashboardUpdateRequest $request, DashboardService $service, string $id)
     {
         return $this->executeRequest(function () use ($request, $service, $id) {
-            $service->update($id, $request->validated());
+            return DashboardResource::make($service->update($id, $request->validated()))->resolve();
         });
     }
 
