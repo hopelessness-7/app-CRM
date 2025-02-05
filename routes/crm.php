@@ -14,7 +14,7 @@ use App\Http\Controllers\Kanban\ApiV1\TaskController;
 use App\Http\Controllers\Kanban\ApiV1\TeamController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('/crm')->group(function () {
+Route::prefix('/crm')->middleware('can.role:super-admin,admin,manager,worker')->group(function () {
     Route::prefix('/kanban')->group(function () {
         Route::controller(DashboardController::class)->group(function () {
             Route::get('/dashboards', 'index');
@@ -94,6 +94,11 @@ Route::prefix('/crm')->group(function () {
     // Аналитика и отчеты - ReportController
     // шаблоны - автоматизация стандартных задач - AutomationController
     // Управление договоренностями и документами - DocumentController
+
+    // Геймификация (GamificationController)
+    //  Управление возвратами и жалобами (ComplaintController)
+    // Управление лояльностью (LoyaltyController)
+    // Управление репутацией (ReputationController)
 });
 
 

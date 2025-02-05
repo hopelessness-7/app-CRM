@@ -117,4 +117,6 @@ return [
 
     'password_timeout' => 10800,
 
+    'default_role_slug' => 'default-user',
+    'default_role_name' => 'Default User',
 ];
