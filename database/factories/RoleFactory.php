@@ -14,12 +14,10 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'slug' => $this->faker->slug(),
+            'name' => 'Super Admin',
+            'slug' => 'super-admin',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-
-            'user_id' => User::factory(),
         ];
     }
 }
