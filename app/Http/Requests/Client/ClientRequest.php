@@ -13,7 +13,6 @@ class ClientRequest extends BaseRequest
             'client_type_id' => ['required', 'integer', 'exists:client_types,id'],
             'status' => ['required', 'string'],
             'notes' => ['required', 'string'],
-            'worker_id' => ['required', 'integer', 'exists:workers,id'],
         ];
     }
 }

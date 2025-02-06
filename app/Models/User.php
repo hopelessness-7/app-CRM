@@ -30,7 +30,8 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'name',
         'email',
         'password',
-        'role_id'
+        'role_id',
+        'company_id'
     ];
 
     /**
@@ -116,5 +117,10 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     public function hasPermission($permission): bool
     {
         return $this->role->permissions->contains('slug', $permission);
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
     }
 }

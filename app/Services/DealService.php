@@ -28,11 +28,6 @@ class DealService
         return $this->dealRepository->getDealsFromClient($clientId, $paginate);
     }
 
-    public function getDealsFromWorker($workerId, $paginate): LengthAwarePaginator
-    {
-        return $this->dealRepository->getDealsFromWorker($workerId, $paginate);
-    }
-
     public function getAll($paginate): LengthAwarePaginator
     {
         return $this->dealRepository->paginate($paginate);

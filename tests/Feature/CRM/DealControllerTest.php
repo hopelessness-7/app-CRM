@@ -5,7 +5,6 @@ namespace Tests\Feature\CRM;
 use App\Models\Client;
 use App\Models\Deal;
 use App\Models\User;
-use App\Models\Worker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
@@ -26,15 +25,6 @@ class DealControllerTest extends TestCase
         $this->assertEquals('testing', env('APP_ENV'));
         $user = User::factory()->create();
         return JWTAuth::fromUser($user);
-    }
-
-    /** @test */
-    public function get_all_deals_from_worker(): void
-    {
-        $token = $this->getToken();
-        $worker = Worker::factory()->create();
-        $response = $this->withHeader('Authorization', 'Bearer ' . $token)->get('/api/v1/crm/deals/workers/' . $worker->id);
-        $response->assertStatus(200);
     }
 
     /** @test */

@@ -7,7 +7,6 @@ use App\Http\Controllers\ApiV1\ContactController;
 use App\Http\Controllers\ApiV1\ContactInformationController;
 use App\Http\Controllers\ApiV1\DealController;
 use App\Http\Controllers\ApiV1\SchedulerController;
-use App\Http\Controllers\ApiV1\WorkerController;
 use App\Http\Controllers\Kanban\ApiV1\ClientTaskController;
 use App\Http\Controllers\Kanban\ApiV1\DashboardController;
 use App\Http\Controllers\Kanban\ApiV1\TaskController;
@@ -55,13 +54,6 @@ Route::prefix('/crm')->middleware('can.role:super-admin,admin,manager,worker')->
         Route::put('/contacts/information/update/{id}', 'update');
         Route::delete('/contacts/information/delete/{id}', 'delete');
     });
-    Route::controller(WorkerController::class)->group(function () {
-        Route::get('/workers', 'index');
-        Route::get('/workers/show/{id}', 'show');
-        Route::post('/workers/create', 'create');
-        Route::put('/workers/update/{id}', 'update');
-        Route::delete('/workers/delete/{id}', 'delete');
-    });
     Route::prefix('clients')->group(function () {
         Route::controller(ClientController::class)->group(function () {
             Route::get('/', 'index');
@@ -74,7 +66,6 @@ Route::prefix('/crm')->middleware('can.role:super-admin,admin,manager,worker')->
         Route::get('/search', [SearchClientController::class, 'index']);
     });
     Route::controller(DealController::class)->group(function () {
-        Route::get('/deals/workers/{id}', 'getFromWorker');
         Route::get('/deals/clients/{id}', 'getFromClient');
         Route::get('/deals', 'index');
         Route::get('/deals/show/{id}', 'show');

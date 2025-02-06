@@ -22,7 +22,6 @@ Route::prefix('v1')->group(function () {
             Route::get('/notifications/show/{id}', 'show');
         });
 
-        // Безопасность и доступ (SecurityController)
         //  Управление временем (TimeTrackingController)
 
         require base_path('routes/chat.php');

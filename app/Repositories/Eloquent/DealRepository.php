@@ -18,13 +18,6 @@ class DealRepository extends RepositoryBase
         return $this->model->where('client_id', $clientId)->paginate($paginate);
     }
 
-    public function getDealsFromWorker($workerId, $paginate): LengthAwarePaginator
-    {
-        return $this->model->whereHas('client', function ($query) use ($workerId) {
-            $query->where('worker_id', $workerId);
-        })->paginate($paginate);
-    }
-
     public function confirmDeal($dealId, $data): void
     {
         $data['stage'] = Deal::STAGE_CLOSED_WON;

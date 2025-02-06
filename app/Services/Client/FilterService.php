@@ -15,10 +15,6 @@ class FilterService
             $dealQuery->where('status', $param['status']);
         }
 
-        if (!empty($param['worker_id'])) {
-            $dealQuery->where('worker_id', $param['worker_id']);
-        }
-
         if (!empty($param['user_name'])) {
             $userNameParts = explode(' ', trim($param['user_name']));
 
