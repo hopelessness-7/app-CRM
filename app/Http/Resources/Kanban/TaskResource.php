@@ -22,10 +22,6 @@ class TaskResource extends JsonResource
             'dashboard' => [
                 'id' => $this->dashboard->id,
                 'title' => $this->dashboard->title,
-                'team' => [
-                    'id' => $this->dashboard->team->id,
-                    'name' => $this->dashboard->team->name,
-                ],
             ],
         ];
     }

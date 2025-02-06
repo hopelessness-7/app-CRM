@@ -9,10 +9,8 @@ return new class extends Migration {
     {
         Schema::create('dashboard_team', function (Blueprint $table) {
             $table->id();
-
-
-
-            $table->timestamps();
+            $table->foreignId('dashboard_id')->constrained('dashboards')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('team_id')->constrained('teams')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

@@ -18,10 +18,7 @@ class DashboardResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'banner' => $this->banner(),
-            'team' => [
-                'id' => $this->team->id,
-                'title' => $this->team->title
-            ]
+            'teams' => TeamResource::collection($this->teams)
         ];
     }
 }

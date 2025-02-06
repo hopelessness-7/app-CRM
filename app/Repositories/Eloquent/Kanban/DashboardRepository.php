@@ -11,4 +11,9 @@ class DashboardRepository extends RepositoryBase
     {
         parent::__construct($dashboard);
     }
+
+    public function updateRelatedTeams($dashboard, $teams): void
+    {
+        $dashboard->teams()->sync($teams);
+    }
 }

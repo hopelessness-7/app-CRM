@@ -25,12 +25,23 @@ class DashboardService
 
     public function store($data)
     {
-        return $this->dashboardRepository->create($data);
+        $dashboard =  $this->dashboardRepository->create($data);
+
+        if (array_key_exists('teams', $data) && !empty($data['teams'])) {
+            $this->dashboardRepository->updateRelatedTeams($dashboard, $data['teams']);
+        }
+
+        return $dashboard;
     }
 
     public function update($id, $data): Model
     {
-        return $this->dashboardRepository->update($id, $data);
+        $dashboard = $this->dashboardRepository->update($id, $data);
+
+        if (array_key_exists('teams', $data) && !empty($data['teams'])) {
+            $this->dashboardRepository->updateRelatedTeams($dashboard, $data['teams']);
+        }
+        return $dashboard;
     }
 
     public function delete($id): void

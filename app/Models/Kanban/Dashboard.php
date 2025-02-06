@@ -2,22 +2,26 @@
 
 namespace App\Models\Kanban;
 
-use App\Models\Image;
 use App\Models\Relations\ImageRelation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Dashboard extends Model
 {
     use HasFactory, ImageRelation;
 
-    protected $fillable = ['title', 'description', 'team_id'];
+    protected $fillable = ['title', 'description'];
 
-    public function team(): BelongsTo
+    public function teams(): BelongsToMany
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsToMany(Team::class, 'dashboard_team', 'dashboard_id', 'team_id');
+    }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
     }
 
     public function banner(): string

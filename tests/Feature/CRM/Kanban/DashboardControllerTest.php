@@ -48,11 +48,9 @@ class DashboardControllerTest extends TestCase
     {
         $token = $this->getToken();
 
-        $team = Team::factory()->create();
         $data = [
             'title' => 'Test Dashboard v-1' . now()->format('H:i:s'),
             'description' => 'Test Dashboard v-1' . now()->format('H:i:s'),
-            'team_id' => $team->id,
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)->post('/api/v1/crm/kanban/dashboards/create', $data);
@@ -74,6 +72,31 @@ class DashboardControllerTest extends TestCase
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)->put('/api/v1/crm/kanban/dashboards/update/' . $dashboard->id, $data);
         $response->assertStatus(200);
         $this->assertDatabaseHas('dashboards', $data);
+    }
+
+    /** @test */
+    public function test_update_dashboard_with_teams()
+    {
+        $token = $this->getToken();
+        // Создаём дашборд
+        $dashboard = Dashboard::factory()->create();
+
+        // Создаём команды
+        $team1 = Team::factory()->create();
+        $team2 = Team::factory()->create();
+
+        // Обновляем дашборд с новыми командами
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)->putJson("/api/v1/crm/kanban/dashboards/update/{$dashboard->id}", [
+            'title' => 'Updated Dashboard',
+            'description' => 'Updated Description',
+            'teams' => [$team1->id, $team2->id], // Передаём массив ID команд
+        ]);
+
+        // Проверяем успешный ответ
+        $response->assertStatus(200);
+
+        // Проверяем, что команды обновлены
+        $this->assertEquals([$team1->id, $team2->id], $dashboard->fresh()->teams->pluck('id')->toArray());
     }
 
     /** @test */

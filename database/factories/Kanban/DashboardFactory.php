@@ -20,7 +20,6 @@ class DashboardFactory extends Factory
         return [
             'title' => $this->faker->words(3, true),
             'description' => $this->faker->paragraph(),
-            'team_id' => Team::factory()->create()->id,
         ];
     }
 }

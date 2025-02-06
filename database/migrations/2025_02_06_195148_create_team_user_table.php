@@ -9,10 +9,8 @@ return new class extends Migration {
     {
         Schema::create('team_user', function (Blueprint $table) {
             $table->id();
-
-
-
-            $table->timestamps();
+            $table->foreignId('team_id')->constrained('teams')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

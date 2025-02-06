@@ -17,7 +17,8 @@ class DashboardUpdateRequest extends BaseRequest
             'title' => 'string',
             'description' => 'string',
             'banner' => 'image',
-            'team_id' => 'exists:teams,id'
+            'teams' => 'array',
+            'teams.*' => 'exists:teams,id',
         ];
     }
 }
