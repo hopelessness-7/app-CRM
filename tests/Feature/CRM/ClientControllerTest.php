@@ -6,7 +6,6 @@ use App\Models\Client;
 use App\Models\ClientType;
 use App\Models\Contact;
 use App\Models\User;
-use App\Models\Worker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
@@ -56,7 +55,6 @@ class ClientControllerTest extends TestCase
             'client_type_id' => ClientType::factory()->create()->id,
             'status' => $this->faker->word(),
             'notes' => $this->faker->word(),
-            'worker_id' => Worker::factory()->create()->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 

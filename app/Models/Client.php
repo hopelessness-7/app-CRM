@@ -18,7 +18,6 @@ class Client extends Model
         'client_type_id',
         'status',
         'notes',
-        'worker_id',
     ];
 
     public function contact(): BelongsTo
@@ -29,11 +28,6 @@ class Client extends Model
     public function tasks(): BelongsToMany
     {
         return $this->belongsToMany(Task::class, 'client_tasks', 'client_id', 'task_id');
-    }
-
-    public function worker(): BelongsTo
-    {
-        return $this->belongsTo(Worker::class);
     }
 
     public function deals(): HasMany

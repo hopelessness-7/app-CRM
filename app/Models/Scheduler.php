@@ -69,9 +69,4 @@ class Scheduler extends Model
     {
         return $this->belongsToMany(Client::class, 'client_schedulers', 'scheduler_id', 'client_id');
     }
-
-    public function workers(): BelongsToMany
-    {
-        return $this->belongsToMany(Worker::class, 'worker_schedulers', 'scheduler_id', 'worker_id');
-    }
 }

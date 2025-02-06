@@ -11,7 +11,6 @@ class ClientUpdateRequest extends FormRequest
         return [
             'contact_id' => ['sometimes', 'exists:contacts,id'],
             'client_type_id' => ['sometimes', 'integer', 'exists:client_types,id'],
-            'worker_id' => ['sometimes', 'integer', 'exists:workers,id'],
             'status' => ['string'],
             'notes' => ['string'],
         ];

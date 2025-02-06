@@ -24,13 +24,6 @@ class DealController extends MainController
         });
     }
 
-    public function getFromWorker(Request $request, DealService $service, $workerId)
-    {
-        return $this->executeRequest(function() use ($request, $service, $workerId) {
-            return DealResource::collection($service->getDealsFromWorker($workerId, $request->input('paginate', 10)))->resolve();
-        });
-    }
-
     public function store(DealRequest $request, DealService $service)
     {
         return $this->executeRequest(function() use ($request, $service) {
