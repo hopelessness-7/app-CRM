@@ -17,7 +17,7 @@ class UserController extends AuthController
         $this->service = $service;
     }
 
-    public function search(Request $request)
+    public function search(Request $request): \Illuminate\Http\JsonResponse
     {
         $searchEloquent = new ElasticsearchRepository();
         $query = $request->input('query', null);
@@ -27,7 +27,7 @@ class UserController extends AuthController
         return $this->sendResponse($searchResult);
     }
 
-    public function show($id = null)
+    public function show($id = null): ?\Illuminate\Http\JsonResponse
     {
         try {
             $user_id = $id ?? auth()->user()->id;
@@ -38,7 +38,7 @@ class UserController extends AuthController
         }
     }
 
-    public function update(UpdateUserRequest $request)
+    public function update(UpdateUserRequest $request): ?\Illuminate\Http\JsonResponse
     {
         try {
             $userUpdate = $request->validated();

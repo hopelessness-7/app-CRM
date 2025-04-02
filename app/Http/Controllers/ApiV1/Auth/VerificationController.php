@@ -25,7 +25,7 @@ class VerificationController extends MainController
      *
      * @return JsonResponse
      */
-    public function notice(Request $request)
+    public function notice(Request $request): JsonResponse
     {
         return $request->user()->hasVerifiedEmail()
             ? $this->sendResponse(['message' => 'Вы уже потвердели почту', 'status_verification' => true], '200') : $this->sendResponse(['message' => 'Сообщение отправлено', 'status_verification' => false], '200');
@@ -64,7 +64,7 @@ class VerificationController extends MainController
      * @param Request $request
      * @return JsonResponse
      */
-    public function resend(Request $request)
+    public function resend(Request $request): JsonResponse
     {
         $request->user()->sendEmailVerificationNotification();
         return $this->sendResponse(['message' => 'На ваш адрес электронной почты отправлена новая ссылка для проверки.'], '200');

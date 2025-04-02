@@ -2,53 +2,30 @@
 
 namespace App\Http\Controllers\ApiV1;
 
-use App\Http\Controllers\MainController;
+use App\Http\Controllers\BaseController;
 use App\Http\Requests\DealRequest;
 use App\Http\Resources\DealResource;
 use App\Services\DealService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class DealController extends MainController
+class DealController extends BaseController
 {
-    public function index(Request $request, DealService $service)
+    protected $service;
+    protected $resourceClass = DealResource::class;
+    protected $createRequestClass = DealRequest::class;
+    protected $updateRequestClass = DealRequest::class;
+
+    public function __construct(DealService $service)
     {
-        return $this->executeRequest(function() use ($request, $service) {
-            return DealResource::collection($service->getAll($request->input('paginate', 10)))->resolve();
-        });
+        parent::__construct($service);
+        $this->service = $service;
     }
 
-    public function getFromClient(Request $request, DealService $service, $clientId)
+    public function getFromClient(Request $request, $clientId): JsonResponse
     {
-        return $this->executeRequest(function() use ($request, $service, $clientId) {
-            return DealResource::collection($service->getDealsFromClient($clientId, $request->input('paginate', 10)))->resolve();
-        });
-    }
-
-    public function store(DealRequest $request, DealService $service)
-    {
-        return $this->executeRequest(function() use ($request, $service) {
-            return DealResource::make($service->store($request->validated()))->resolve();
-        });
-    }
-
-    public function show(DealService $service, $dealId)
-    {
-        return $this->executeRequest(function() use ($service, $dealId) {
-            return DealResource::make($service->show($dealId))->resolve();
-        });
-    }
-
-    public function update(DealRequest $request, DealService $service, $dealId)
-    {
-        return $this->executeRequest(function() use ($request, $service, $dealId) {
-            return DealResource::make($service->update($dealId, $request->validated()))->resolve();
-        });
-    }
-
-    public function destroy(DealService $service, $dealId)
-    {
-        return $this->executeRequest(function() use ($service, $dealId) {
-            $service->delete($dealId);
+        return $this->executeRequest(function() use ($request, $clientId) {
+            return DealResource::collection($this->service->getDealsFromClient($clientId, $request->input('paginate', 10)))->resolve();
         });
     }
 }

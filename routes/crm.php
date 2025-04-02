@@ -6,11 +6,11 @@ use App\Http\Controllers\ApiV1\Client\SearchClientController;
 use App\Http\Controllers\ApiV1\ContactController;
 use App\Http\Controllers\ApiV1\ContactInformationController;
 use App\Http\Controllers\ApiV1\DealController;
+use App\Http\Controllers\ApiV1\Kanban\ClientTaskController;
+use App\Http\Controllers\ApiV1\Kanban\DashboardController;
+use App\Http\Controllers\ApiV1\Kanban\TaskController;
+use App\Http\Controllers\ApiV1\Kanban\TeamController;
 use App\Http\Controllers\ApiV1\SchedulerController;
-use App\Http\Controllers\Kanban\ApiV1\ClientTaskController;
-use App\Http\Controllers\Kanban\ApiV1\DashboardController;
-use App\Http\Controllers\Kanban\ApiV1\TaskController;
-use App\Http\Controllers\Kanban\ApiV1\TeamController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/crm')->middleware('can.role:super-admin,admin,manager,worker')->group(function () {
@@ -18,16 +18,16 @@ Route::prefix('/crm')->middleware('can.role:super-admin,admin,manager,worker')->
         Route::controller(DashboardController::class)->group(function () {
             Route::get('/dashboards', 'index');
             Route::get('/dashboards/show/{id}', 'show')->name('dashboards.show');
-            Route::post('/dashboards/create', 'store');
+            Route::post('/dashboards/create', 'create');
             Route::put('/dashboards/update/{id}', 'update');
-            Route::delete('/dashboards/delete/{id}', 'destroy');
+            Route::delete('/dashboards/delete/{id}', 'delete');
         });
         Route::controller(TeamController::class)->group(function () {
             Route::get('/teams', 'index');
             Route::get('/teams/show/{id}', 'show');
-            Route::post('/teams/create', 'store');
+            Route::post('/teams/create', 'create');
             Route::put('/teams/update/{id}', 'update');
-            Route::delete('/teams/delete/{id}', 'destroy');
+            Route::delete('/teams/delete/{id}', 'delete');
         });
         Route::controller(TaskController::class)->group(function () {
             Route::get('/tasks/{dashboardId}', 'index');
@@ -69,16 +69,16 @@ Route::prefix('/crm')->middleware('can.role:super-admin,admin,manager,worker')->
         Route::get('/deals/clients/{id}', 'getFromClient');
         Route::get('/deals', 'index');
         Route::get('/deals/show/{id}', 'show');
-        Route::post('/deals/create', 'store');
+        Route::post('/deals/create', 'create');
         Route::put('/deals/update/{id}', 'update');
-        Route::delete('/deals/delete/{id}', 'destroy');
+        Route::delete('/deals/delete/{id}', 'delete');
     });
     Route::controller(SchedulerController::class)->group(function () {
         Route::get('/schedulers', 'index');
         Route::get('/schedulers/show/{id}', 'show');
-        Route::post('/schedulers/create', 'store');
+        Route::post('/schedulers/create', 'create');
         Route::put('/schedulers/update/{id}', 'update');
-        Route::delete('/schedulers/delete/{id}', 'destroy');
+        Route::delete('/schedulers/delete/{id}', 'delete');
     });
 
     // Воронка продаж (Sales Pipeline) - SalesPipelineController

@@ -2,71 +2,23 @@
 
 namespace App\Http\Controllers\ApiV1;
 
-use App\Http\Controllers\MainController;
+use App\Http\Controllers\BaseController;
 use App\Http\Requests\ContactRequest;
 use App\Http\Requests\ContactUpdateRequest;
 use App\Http\Resources\Contact\ContactResource;
 use App\Services\Contact\ContactService;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
-class ContactController extends MainController
+class ContactController extends BaseController
 {
-    protected ContactService $service;
+    protected $service;
+    protected $resourceClass = ContactResource::class;
+    protected $createRequestClass = ContactRequest::class;
+    protected $updateRequestClass = ContactUpdateRequest::class;
+
     public function __construct(ContactService $service)
     {
+        parent::__construct($service);
         $this->service = $service;
-    }
-
-    public function index(Request $request)
-    {
-        try {
-            $paginate = $request->input('paginate', 10);
-            $resource = ContactResource::collection($this->service->index($paginate))->resolve();
-            return $this->sendResponse($resource);
-        } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), $exception->getCode());
-        }
-    }
-
-    public function show($id)
-    {
-        try {
-            $resource = ContactResource::make($this->service->show($id))->resolve();
-            return $this->sendResponse($resource);
-        } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), $exception->getCode());
-        }
-    }
-
-    public function create(ContactRequest $request)
-    {
-        try {
-            $contact = $request->validated();
-            $resource = ContactResource::make($this->service->create($contact))->resolve();
-            return $this->sendResponse($resource);
-        } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), $exception->getCode());
-        }
-    }
-
-    public function update(ContactUpdateRequest $request, $id)
-    {
-        try {
-            $contact = $request->validated();
-            $resource = ContactResource::make($this->service->update((int) $id, $contact))->resolve();
-            return $this->sendResponse($resource);
-        } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), $exception->getCode());
-        }
-    }
-
-    public function delete($id)
-    {
-        try {
-            $this->service->delete((int) $id);
-            return $this->sendResponse([]);
-        } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), $exception->getCode());
-        }
     }
 }

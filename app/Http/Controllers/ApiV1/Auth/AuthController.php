@@ -6,7 +6,7 @@ use App\Http\Controllers\MainController;
 
 class AuthController extends MainController
 {
-    public function createNewToken($token)
+    public function createNewToken($token): \Illuminate\Http\JsonResponse
     {
         $user = auth()->user();
         return $this->sendResponse([

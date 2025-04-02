@@ -26,7 +26,7 @@ class MessageService
         return $this->repository->getMessagesInRoom($roomId, $user, $paginate);
     }
 
-    public function send($data): Model
+    public function create($data): Model
     {
         $message = $this->repository->create($data);
         event(new MessageEvent($message->toArray(), $message->room_id));

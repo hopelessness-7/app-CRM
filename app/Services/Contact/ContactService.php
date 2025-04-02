@@ -3,37 +3,18 @@
 namespace App\Services\Contact;
 
 use App\Repositories\Eloquent\ContactRepository;
+use App\Traits\CrudMethodsTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ContactService
 {
-    protected ContactRepository $contactRepository;
-    public function __construct(ContactRepository $contactRepository)
-    {
-        $this->contactRepository = $contactRepository;
-    }
+    use CrudMethodsTrait;
 
-    public function index($paginate)
-    {
-        return $this->contactRepository->paginate($paginate);
-    }
-    public function show(int $id): Model
-    {
-        return $this->contactRepository->find($id);
-    }
+    protected $repository;
 
-    public function create(array $contact): Model
+    public function __construct(ContactRepository $repository)
     {
-        return $this->contactRepository->create($contact);
-    }
-
-    public function update(int $id, array $contact): Model
-    {
-        return $this->contactRepository->update($id, $contact);
-    }
-
-    public function delete($id): int
-    {
-        return $this->contactRepository->delete($id);
+        $this->repository = $repository;
     }
 }

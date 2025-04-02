@@ -2,20 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PaginatedResource;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 class MainController extends Controller
 {
     /**
      * success response method.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @param mixed $result
+     * @param string $message
+     * @param int $code
+     * @return JsonResponse
      */
-    public function sendResponse(mixed $result, string $message = 'request completed successfully', int $code = 200)
+    public function sendResponse(mixed $result, string $message = 'request completed successfully', int $code = 200): JsonResponse
     {
-        $response = [
-            'data'    => $result,
-            'message' => $message,
-            'code' => $code
-        ];
+        if ($result instanceof PaginatedResource) {
+            // Преобразуем ресурс в массив
+            $resultArray = $result->resolve();
+
+            // Формируем ответ
+            $response = [
+                'data' => $resultArray['data'] ?? $resultArray,
+                'meta' => $resultArray['meta'] ?? null,
+                'links' => $resultArray['links'] ?? null,
+                'message' => $message,
+                'code' => $code,
+            ];
+        } else {
+            // Формируем ответ для обычных данных
+            $response = [
+                'data' => $result,
+                'message' => $message,
+                'code' => $code,
+            ];
+        }
 
         return response()->json($response, $code);
     }
@@ -23,9 +46,11 @@ class MainController extends Controller
     /**
      * return error response.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @param $error
+     * @param int $code
+     * @return JsonResponse
      */
-    public function sendError($error, $code = 404)
+    public function sendError($error, int $code = 404): JsonResponse
     {
         $response = [
             'errors' => [
@@ -37,7 +62,11 @@ class MainController extends Controller
         return response()->json($response, $code);
     }
 
-    public function executeRequest($callback)
+    /**
+     * @param $callback
+     * @return JsonResponse
+     */
+    public function executeRequest($callback): JsonResponse
     {
 //        try {
             return $this->sendResponse($callback());

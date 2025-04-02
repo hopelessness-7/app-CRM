@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Kanban\ApiV1;
+namespace App\Http\Controllers\ApiV1\Kanban;
 
 use App\Http\Controllers\MainController;
-use Illuminate\Http\Request;
-use App\Http\Resources\Kanban\TaskResource;
 use App\Http\Requests\Kanban\TaskRequest;
 use App\Http\Requests\Kanban\TaskUpdateRequest;
+use App\Http\Resources\Kanban\TaskResource;
 use App\Services\Kanban\TaskService;
+use Illuminate\Http\Request;
 
 class TaskController extends MainController
 {

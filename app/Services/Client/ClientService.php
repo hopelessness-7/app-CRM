@@ -3,39 +3,15 @@
 namespace App\Services\Client;
 
 use App\Repositories\Eloquent\ClientRepository;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Traits\CrudMethodsTrait;
 
 class ClientService
 {
-    protected ClientRepository $clientRepository;
-    public function __construct(clientRepository $clientRepository)
-    {
-        $this->clientRepository = $clientRepository;
-    }
+    use CrudMethodsTrait;
 
-    public function get(int $paginate = 10): LengthAwarePaginator
+    protected $repository;
+    public function __construct(ClientRepository $repository)
     {
-        return $this->clientRepository->paginate($paginate);
-    }
-
-    public function show(int $clientId): Model
-    {
-        return $this->clientRepository->find($clientId);
-    }
-
-    public function create($data): Model
-    {
-        return $this->clientRepository->create($data);
-    }
-
-    public function update($data, $clientId): Model
-    {
-        return $this->clientRepository->update($data, $clientId);
-    }
-
-    public function delete($clientId): void
-    {
-        $this->clientRepository->delete($clientId);
+        $this->repository = $repository;
     }
 }

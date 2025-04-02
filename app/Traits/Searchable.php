@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Traits;
+namespace App\Traits;
 
 use App\Observers\ElasticsearchObserver;
 
@@ -14,7 +14,7 @@ trait Searchable
         }
     }
 
-    public function getSearchIndex()
+    public function getSearchIndex(): string
     {
         return $this->getTable();
     }
@@ -27,7 +27,7 @@ trait Searchable
         return $this->getTable();
     }
 
-    public function toSearchArray()
+    public function toSearchArray(): array
     {
         return $this->toArray();
     }
